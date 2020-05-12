@@ -1,8 +1,11 @@
 package com.example.CRUD.models;
 
+import javax.validation.constraints.NotEmpty;
+
 public class SkillModel {
 	
 	private long idSkill;
+	@NotEmpty
 	private String name;
 	
 	public SkillModel() {

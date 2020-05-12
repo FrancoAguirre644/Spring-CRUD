@@ -22,14 +22,20 @@
             <div class="form-group">
                 <input type="text" class="form-control" placeholder="Name" th:field="*{name}">
             </div>
+            
+            <div class="alert alert-danger" role="alert" th:if="${#fields.hasErrors('name')}" th:errors="*{name}"></div>
 
             <div class="form-group">
                 <input type="text" class="form-control" placeholder="Age" th:field="*{age}">
             </div>
+            
+            <div class="alert alert-danger" role="alert" th:if="${#fields.hasErrors('age')}" th:errors="*{age}"></div>
 
             <div class="form-group">
                 <input type="text" class="form-control" placeholder="Adress" th:field="*{adress}">
             </div>
+            
+            <div class="alert alert-danger" role="alert" th:if="${#fields.hasErrors('adress')}" th:errors="*{adress}"></div>
             
             <select placeholder="Skills" class="form-control" th:field="*{skill.idSkill}"> 
 				<option th:each="s : ${skills}" th:value="${s.idSkill}" th:text="${s.name}"> </option>

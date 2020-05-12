@@ -1,11 +1,25 @@
 package com.example.CRUD.models;
 
+import javax.validation.constraints.Max;
+import javax.validation.constraints.Min;
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
+
 public class DevelopModel {
 	
 	private long idDevelop;
+	
+	@NotEmpty
 	private String name;
+	
+	@NotNull
+    @Min(value = 16)
+    @Max(value = 100)
 	private int age;
+	
+	@NotEmpty
 	private String adress;
+	
 	private SkillModel skill; 
 	
 	public DevelopModel() {

@@ -1,8 +1,11 @@
 package com.example.CRUD.controllers;
 
+import javax.validation.Valid;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Controller;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -46,9 +49,19 @@ public class DevelopController {
 	}
 	
 	@PostMapping("/create")
-	public RedirectView create(@ModelAttribute("develop") DevelopModel developModel) {
-		developService.insertOrUpdate(developModel);
-		return new RedirectView(ViewRouteHelpers.REDIRECT_VIEW);
+	public ModelAndView create(@Valid @ModelAttribute("develop") DevelopModel developModel, BindingResult bindingResult) {
+		ModelAndView mV = new ModelAndView();
+		
+		if(bindingResult.hasErrors()) {
+			mV.setViewName(ViewRouteHelpers.DEVELOP_ADD);
+			mV.addObject("skills", skillService.getAll());
+
+		}else {
+			developService.insertOrUpdate(developModel);
+			mV.setViewName("redirect:"+ViewRouteHelpers.REDIRECT_VIEW);
+		}
+		
+		return mV;
 	}
 	
 	@GetMapping("{id}")
@@ -60,10 +73,19 @@ public class DevelopController {
 	}
 	
 	@PostMapping("/update")
-	public RedirectView update(@ModelAttribute("develop") DevelopModel developModel) {
-		developModel.setSkill(skillService.findByIdSkill(developModel.getSkill().getIdSkill()));
-		developService.insertOrUpdate(developModel);
-		return new RedirectView(ViewRouteHelpers.REDIRECT_VIEW);
+	public ModelAndView update(@Valid @ModelAttribute("develop") DevelopModel developModel, BindingResult bindingResult) {
+		ModelAndView mV = new ModelAndView();
+		
+		if(bindingResult.hasErrors()) {
+			mV.setViewName(ViewRouteHelpers.DEVELOP_UPDATE);
+			mV.addObject("skills", skillService.getAll());
+		}else {
+			developModel.setSkill(skillService.findByIdSkill(developModel.getSkill().getIdSkill()));
+			developService.insertOrUpdate(developModel);
+			mV.setViewName("redirect:"+ViewRouteHelpers.REDIRECT_VIEW);
+		}			
+		
+		return mV;
 	}
 	
 	@GetMapping("delete/{id}")
