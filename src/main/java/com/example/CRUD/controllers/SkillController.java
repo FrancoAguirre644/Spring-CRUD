@@ -14,9 +14,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.view.RedirectView;
 
+import com.example.CRUD.entities.Developer;
 import com.example.CRUD.helpers.ViewRouteHelpers;
 import com.example.CRUD.models.SkillModel;
-import com.example.CRUD.services.IDevelopService;
+import com.example.CRUD.services.IDeveloperService;
 import com.example.CRUD.services.ISkillService;
 
 @Controller
@@ -27,6 +28,9 @@ public class SkillController {
 	@Qualifier("skillService")
 	private ISkillService skillService;
 	
+	@Autowired
+	@Qualifier("developerService")
+	private IDeveloperService developerService;
 	
 	@GetMapping("/new")
 	public ModelAndView create() {
@@ -75,8 +79,22 @@ public class SkillController {
 	
 	@GetMapping("delete/{id}")
 	public RedirectView delete(@PathVariable("id") long id) {
+		boolean band = false;
+		int i=0;
+				
+		while(i<developerService.getAll().size() && !band) {
+			Developer d = developerService.getAll().get(i);
+			if(d.getSkill().getIdSkill() == id) {
+				band = true;
+			}
+			
+			i++;
+		}
 		
-		skillService.remove(id);
+		if(!band) {
+			skillService.remove(id);
+		}
+		
 		
 		return new RedirectView(ViewRouteHelpers.REDIRECT_VIEW);
 	}

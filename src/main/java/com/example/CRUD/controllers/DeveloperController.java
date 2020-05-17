@@ -15,17 +15,17 @@ import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.view.RedirectView;
 
 import com.example.CRUD.helpers.ViewRouteHelpers;
-import com.example.CRUD.models.DevelopModel;
-import com.example.CRUD.services.IDevelopService;
+import com.example.CRUD.models.DeveloperModel;
+import com.example.CRUD.services.IDeveloperService;
 import com.example.CRUD.services.ISkillService;
 
 @Controller
 @RequestMapping("/crud")
-public class DevelopController {
+public class DeveloperController {
 	
 	@Autowired
-	@Qualifier("developService")
-	private IDevelopService developService;
+	@Qualifier("developerService")
+	private IDeveloperService developService;
 	
 	@Autowired
 	@Qualifier("skillService")
@@ -43,13 +43,13 @@ public class DevelopController {
 	public ModelAndView create() {
 		ModelAndView mAV = new ModelAndView(ViewRouteHelpers.DEVELOP_ADD);
 		mAV.addObject("skills", skillService.getAll());
-		mAV.addObject("develop", new DevelopModel());
+		mAV.addObject("develop", new DeveloperModel());
 		
 		return mAV;
 	}
 	
 	@PostMapping("/create")
-	public ModelAndView create(@Valid @ModelAttribute("develop") DevelopModel developModel, BindingResult bindingResult) {
+	public ModelAndView create(@Valid @ModelAttribute("develop") DeveloperModel developModel, BindingResult bindingResult) {
 		ModelAndView mV = new ModelAndView();
 		
 		if(bindingResult.hasErrors()) {
@@ -73,7 +73,7 @@ public class DevelopController {
 	}
 	
 	@PostMapping("/update")
-	public ModelAndView update(@Valid @ModelAttribute("develop") DevelopModel developModel, BindingResult bindingResult) {
+	public ModelAndView update(@Valid @ModelAttribute("develop") DeveloperModel developModel, BindingResult bindingResult) {
 		ModelAndView mV = new ModelAndView();
 		
 		if(bindingResult.hasErrors()) {

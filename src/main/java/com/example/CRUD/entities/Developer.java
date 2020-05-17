@@ -10,8 +10,8 @@ import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 @Entity
-@Table(name="develop")
-public class Develop {
+@Table(name="developer")
+public class Developer {
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -29,11 +29,11 @@ public class Develop {
 	@OneToOne(cascade = CascadeType.MERGE)
 	private Skill skill;
 	
-	public Develop() {
+	public Developer() {
 		
 	}
 
-	public Develop(long idDevelop, String name, int age, String adress, Skill skill) {
+	public Developer(long idDevelop, String name, int age, String adress, Skill skill) {
 		super();
 		this.idDevelop = idDevelop;
 		this.name = name;

@@ -5,7 +5,7 @@ import javax.validation.constraints.Min;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 
-public class DevelopModel {
+public class DeveloperModel {
 	
 	private long idDevelop;
 	
@@ -22,11 +22,11 @@ public class DevelopModel {
 	
 	private SkillModel skill; 
 	
-	public DevelopModel() {
+	public DeveloperModel() {
 		
 	}
 
-	public DevelopModel(long idDevelop, String name, int age, String adress,SkillModel skill) {
+	public DeveloperModel(long idDevelop, String name, int age, String adress,SkillModel skill) {
 		super();
 		this.idDevelop = idDevelop;
 		this.name = name;
