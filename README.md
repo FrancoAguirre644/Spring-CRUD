@@ -2,7 +2,7 @@
 Especificaciones:<br/>
 1-Contara con registros precargados en un archivo .sql <br/>
 
-2-A simple vista parecera que no se puede editar/borrar los registros de la tabla "skill", pero no es asi,se podra podra accediendo 
+2-A simple vista parecera que no se puede editar/borrar los registros de la tabla "skill", pero no es asi,se podra hacerlo accediendo 
 a las siguientes direcciones:<br/>
 http://localhost:8080/skill/new <br/>
 http://localhost:8080/skill/delete/ (Seguido del id de la skill a eliminar)
