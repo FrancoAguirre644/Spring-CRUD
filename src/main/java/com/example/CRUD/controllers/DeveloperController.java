@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import org.springframework.web.servlet.view.RedirectView;
 
 import com.example.CRUD.helpers.ViewRouteHelpers;
@@ -49,7 +50,7 @@ public class DeveloperController {
 	}
 	
 	@PostMapping("/create")
-	public ModelAndView create(@Valid @ModelAttribute("develop") DeveloperModel developModel, BindingResult bindingResult) {
+	public ModelAndView create(@Valid @ModelAttribute("develop") DeveloperModel developModel, BindingResult bindingResult, RedirectAttributes redirectAttrs) {
 		ModelAndView mV = new ModelAndView();
 		
 		if(bindingResult.hasErrors()) {
@@ -59,6 +60,8 @@ public class DeveloperController {
 		}else {
 			developService.insertOrUpdate(developModel);
 			mV.setViewName("redirect:"+ViewRouteHelpers.REDIRECT_VIEW);
+			redirectAttrs.addFlashAttribute("mensaje","Agregado Correctamente");
+			redirectAttrs.addFlashAttribute("clase", "success");
 		}
 		
 		return mV;
@@ -73,7 +76,7 @@ public class DeveloperController {
 	}
 	
 	@PostMapping("/update")
-	public ModelAndView update(@Valid @ModelAttribute("develop") DeveloperModel developModel, BindingResult bindingResult) {
+	public ModelAndView update(@Valid @ModelAttribute("develop") DeveloperModel developModel, BindingResult bindingResult,RedirectAttributes redirectAttrs) {
 		ModelAndView mV = new ModelAndView();
 		
 		if(bindingResult.hasErrors()) {
@@ -82,6 +85,8 @@ public class DeveloperController {
 		}else {
 			developModel.setSkill(skillService.findByIdSkill(developModel.getSkill().getIdSkill()));
 			developService.insertOrUpdate(developModel);
+			redirectAttrs.addFlashAttribute("mensaje","Actualizado Correctamente");
+			redirectAttrs.addFlashAttribute("clase", "success");
 			mV.setViewName("redirect:"+ViewRouteHelpers.REDIRECT_VIEW);
 		}			
 		
@@ -89,9 +94,11 @@ public class DeveloperController {
 	}
 	
 	@GetMapping("delete/{id}")
-	public RedirectView delete(@PathVariable("id") long id) {
+	public RedirectView delete(@PathVariable("id") long id,RedirectAttributes redirectAttrs) {
 		
 		developService.remove(id);
+		redirectAttrs.addFlashAttribute("mensaje","Eliminado Correctamente");
+		redirectAttrs.addFlashAttribute("clase", "success");
 		
 		return new RedirectView(ViewRouteHelpers.REDIRECT_VIEW);
 	}

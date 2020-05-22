@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import org.springframework.web.servlet.view.RedirectView;
 
 import com.example.CRUD.entities.Developer;
@@ -41,7 +42,7 @@ public class SkillController {
 	}
 	
 	@PostMapping("/create")
-	public ModelAndView create(@Valid @ModelAttribute("skill") SkillModel skillModel, BindingResult bindingResult) {
+	public ModelAndView create(@Valid @ModelAttribute("skill") SkillModel skillModel, BindingResult bindingResult, RedirectAttributes redirectAttrs) {
 		ModelAndView mV = new ModelAndView();
 		
 		if(bindingResult.hasErrors()) {
@@ -49,6 +50,8 @@ public class SkillController {
 
 		}else {
 			skillService.insertOrUpdate(skillModel);
+			redirectAttrs.addFlashAttribute("mensaje","Agregado Correctamente");
+			redirectAttrs.addFlashAttribute("clase", "success");
 			mV.setViewName("redirect:"+ViewRouteHelpers.REDIRECT_VIEW);
 		}	
 			
@@ -63,7 +66,7 @@ public class SkillController {
 	}
 	
 	@PostMapping("/update")
-	public ModelAndView update(@Valid @ModelAttribute("skill") SkillModel skillModel, BindingResult bindingResult) {
+	public ModelAndView update(@Valid @ModelAttribute("skill") SkillModel skillModel, BindingResult bindingResult, RedirectAttributes redirectAttrs) {
 		ModelAndView mV = new ModelAndView();
 		
 		if(bindingResult.hasErrors()) {
@@ -71,6 +74,8 @@ public class SkillController {
 
 		}else {
 			skillService.insertOrUpdate(skillModel);
+			redirectAttrs.addFlashAttribute("mensaje","Actualizado Correctamente");
+			redirectAttrs.addFlashAttribute("clase", "success");
 			mV.setViewName("redirect:"+ViewRouteHelpers.REDIRECT_VIEW);
 		}	
 			
@@ -78,7 +83,7 @@ public class SkillController {
 	}
 	
 	@GetMapping("delete/{id}")
-	public RedirectView delete(@PathVariable("id") long id) {
+	public RedirectView delete(@PathVariable("id") long id,RedirectAttributes redirectAttrs) {
 		boolean band = false;
 		int i=0;
 				
@@ -93,6 +98,11 @@ public class SkillController {
 		
 		if(!band) {
 			skillService.remove(id);
+			redirectAttrs.addFlashAttribute("mensaje","Eliminado Correctamente");
+			redirectAttrs.addFlashAttribute("clase", "success");	
+		}else{
+			redirectAttrs.addFlashAttribute("mensaje","No se ha podido eliminar debido a que se encuentra asociado a un developer");
+			redirectAttrs.addFlashAttribute("clase", "danger");
 		}
 		
 		

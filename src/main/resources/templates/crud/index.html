@@ -11,10 +11,13 @@
 
 <body>
 
-    <div class="container" style="padding: 20px;">
+    <div class="container-fluid">
         <div class="container-title">
             <h3>CRUD in Spring MVC</h3>
             <a th:href="@{/crud/new} " class="btn btn-success">Add Developer</a>
+        </div>
+
+        <div th:classappend="'alert-' + (${clase != null} ? ${clase} : info)" th:if="${mensaje != null}" th:text="${mensaje}" class="alert">
         </div>
 
         <table class="table table-striped ">
@@ -39,7 +42,7 @@
 
             </tbody>
         </table>
-        
+
         <table class="table table-striped table-skill">
             <thead>
                 <tr class="table-info">
@@ -49,7 +52,7 @@
             </thead>
             <tbody>
                 <tr th:each="s : ${skills} ">
-                	<td th:text="${s.idSkill} "></td>
+                    <td th:text="${s.idSkill} "></td>
                     <td th:text="${s.name} "></td>
 
                 </tr>

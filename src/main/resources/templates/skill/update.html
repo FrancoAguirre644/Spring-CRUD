@@ -12,19 +12,19 @@
 </head>
 
 <body>
-    <div class="container container-form" >
-        <form action="" method="post" th:action="@{/skill/update}" th:object="${skill}" >
-        	<div class="text-center">
+    <div class="container container-form">
+        <form action="" method="post" th:action="@{/skill/update}" th:object="${skill}">
+            <div class="text-center">
                 <h3>Update Skill</h3>
-            </div>           
+            </div>
             <input type="hidden" th:field="*{idSkill}">
 
             <div class="form-group">
-                <input type="text" class="form-control" placeholder="Name" th:field="*{name}">
+                <input type="text" class="form-control" placeholder="Name" th:field="*{name}" th:required="true">
             </div>
-            
+
             <div class="alert alert-danger" role="alert" th:if="${#fields.hasErrors('name')}" th:errors="*{name}"></div>
-            
+
             <div class="text-center">
                 <input type="submit" class="btn btn-primary" value="Update">
             </div>
