@@ -7,20 +7,25 @@
     <link rel="stylesheet" href="style.css" th:href="@{/css/style.css}">
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400&display=swap" rel="stylesheet">
 
+    <script th:src="@{/js/jquery.js}" src="../../static/js/jquery.js"></script>
+
+
 </head>
 
 <body>
-
     <div class="container-fluid">
+
         <div class="container-title">
             <h3>CRUD in Spring MVC</h3>
-            <a th:href="@{/crud/new} " class="btn btn-success">Add Developer</a>
+            <input class="form-control" id="search" style="width: 400px !important;" type="search" placeholder="Search" aria-label="Search">
+            <a class="btn btn-success" th:href="@{/crud/new} ">Add Developer</a>
+
         </div>
 
         <div th:classappend="'alert-' + (${clase != null} ? ${clase} : info)" th:if="${mensaje != null}" th:text="${mensaje}" class="alert">
         </div>
 
-        <table class="table table-striped ">
+        <table class="table table-striped " id="developer-table">
             <thead>
                 <tr class="table-info">
                     <th scope="col ">Name</th>
@@ -61,6 +66,32 @@
         </table>
     </div>
 
+    </div>
+
+    <script type="text/javascript">
+        $(document).ready(function() {
+            $('#search').keyup(function() { //Cuando suelto una tecla
+                search_table($(this).val()); //Llamo a la funcion y paso el valor del input search
+            });
+
+            function search_table(value) {
+
+                $('#developer-table tbody tr').each(function() { //Por cada registro 
+                    var found = 'false';
+                    $(this).each(function() { // Por cada dato del registro
+                        if ($(this).text().toLowerCase().indexOf(value.toLowerCase()) >= 0) { // Paso las dos a minuscula y comparo 
+                            found = 'true'; // Si son iguales cambio la bandera a TRUE
+                        }
+                    });
+                    if (found == 'true') {
+                        $(this).show(); // Muestro los registros que coinciden con lo ingresado
+                    } else {
+                        $(this).hide(); // Escondo los registros que coinciden con lo ingresado
+                    }
+                });
+            }
+        });
+    </script>
 </body>
 
 </html>
